@@ -18,7 +18,6 @@ The system demonstrates **real-world backend concepts** such as optimistic concu
 ## 📁 Project Structure
 
 issue-tracker-api/
-│
 ├── app/
 │ ├── main.py
 │ ├── database.py
@@ -37,7 +36,7 @@ issue-tracker-api/
 └── README.md
 
 
----
+
 
 ---Create database on postgreSQL(pgAdmin etc)-----
 CREATE DATABASE issue_tracker;
