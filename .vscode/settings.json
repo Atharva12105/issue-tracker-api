@@ -1,0 +1,8 @@
+{
+    "python.defaultInterpreterPath": "/Users/atharva/issue-tracker-api/venv/bin/python",
+    "python.analysis.extraPaths": ["./"],
+    "python.analysis.diagnosticSeverityOverrides": {
+      "reportMissingImports": "none"
+    }
+  }
+  
