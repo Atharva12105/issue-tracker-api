@@ -19,21 +19,22 @@ The system demonstrates **real-world backend concepts** such as optimistic concu
 
 issue-tracker-api/
 ├── app/
-│ ├── main.py
-│ ├── database.py
-│ ├── models.py
-│ ├── schemas.py
-│ ├── deps.py
-│ │
-│ ├── routers/
-│ │ ├── issues.py
-│ │ ├── comments.py
-│ │ ├── reports.py
-│ │ └── users.py
+│   ├── main.py
+│   ├── database.py
+│   ├── models.py
+│   ├── schemas.py
+│   ├── deps.py
+│   │
+│   ├── routers/
+│   │   ├── issues.py
+│   │   ├── comments.py
+│   │   ├── reports.py
+│   │   └── users.py
 │
 ├── requirements.txt
 ├── .env
 └── README.md
+
 
 
 
