@@ -54,6 +54,15 @@ pip install -r requirements.txt
 
 3️⃣ Configure environment variables
 Create a .env file:
+
+issue-tracker-api/
+├── app/
+├── requirements.txt
+├── README.md
+├── .gitignore
+└── .env   ← create .env here
+
+Add database url in .env like this:
 DATABASE_URL=postgresql://postgres:password@localhost:5432/issue_tracker
 
 4️⃣ Create database on postgreSQL
@@ -364,3 +373,65 @@ Output
 Swagger UI
 You can also test everything interactively at:
 http://127.0.0.1:8000/docs# issue-tracker-api
+
+
+🗄️ Database Schema
+The application uses PostgreSQL with the following schema.
+All tables are created and managed using SQLAlchemy ORM, with constraints enforced at the database level.
+🔹 users
+Stores system users who can be assignees or comment authors.
+CREATE TABLE users (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(100) NOT NULL
+);
+Constraints
+id → Primary Key
+🔹 issues
+Stores issues reported in the system.
+CREATE TABLE issues (
+    id SERIAL PRIMARY KEY,
+    title VARCHAR(255) NOT NULL,
+    status VARCHAR(50) DEFAULT 'open',
+    assignee_id INTEGER REFERENCES users(id),
+    version INTEGER NOT NULL DEFAULT 1,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    resolved_at TIMESTAMP
+);
+Constraints & Indexes
+assignee_id → Foreign Key → users(id)
+version → Used for optimistic concurrency control
+Indexes:
+CREATE INDEX idx_issues_status ON issues(status);
+CREATE INDEX idx_issues_assignee ON issues(assignee_id);
+🔹 comments
+Stores comments added to issues.
+CREATE TABLE comments (
+    id SERIAL PRIMARY KEY,
+    body TEXT NOT NULL,
+    issue_id INTEGER REFERENCES issues(id) ON DELETE CASCADE,
+    author_id INTEGER REFERENCES users(id),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+Constraints & Indexes
+issue_id → Foreign Key → issues(id)
+author_id → Foreign Key → users(id)
+Index:
+CREATE INDEX idx_comments_issue ON comments(issue_id);
+🔹 labels
+Stores unique labels that can be assigned to issues.
+CREATE TABLE labels (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(50) UNIQUE NOT NULL
+);
+Constraints
+name → Unique
+🔹 issue_labels
+Join table for many-to-many relationship between issues and labels.
+CREATE TABLE issue_labels (
+    issue_id INTEGER REFERENCES issues(id) ON DELETE CASCADE,
+    label_id INTEGER REFERENCES labels(id) ON DELETE CASCADE,
+    PRIMARY KEY (issue_id, label_id)
+);
+Constraints
+Composite Primary Key (issue_id, label_id)
+Prevents duplicate label assignments
