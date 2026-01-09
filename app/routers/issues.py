@@ -197,19 +197,6 @@ def bulk_status_update(
         raise HTTPException(status_code=500, detail=str(e))
 
 
-# @router.patch("/{issue_id}")
-# def update_issue(issue_id: int, data: schemas.IssueUpdate, db: Session = Depends(get_db)):
-#     issue = db.query(models.Issue).get(issue_id)
-#     if issue.version != data.version:
-#         raise HTTPException(status_code=409, detail="Version conflict")
-
-#     for k, v in data.dict(exclude={"version"}).items():
-#         if v is not None:
-#             setattr(issue, k, v)
-
-#     issue.version += 1
-#     db.commit()
-#     return issue
 
 @router.patch("/{issue_id}")
 def update_issue(

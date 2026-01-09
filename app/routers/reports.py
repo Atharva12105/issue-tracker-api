@@ -1,27 +1,3 @@
-# from fastapi import APIRouter, Depends
-# from sqlalchemy.orm import Session
-# from sqlalchemy import func
-# from ..database import SessionLocal
-# from ..models import Issue
-# from app.deps import get_db
-
-# router = APIRouter(prefix="/reports", tags=["Reports"])
-
-# @router.get("/top-assignees")
-# def top_assignees(db: Session = Depends(get_db)):
-#     return (
-#         db.query(
-#             Issue.assignee_id,
-#             func.count(Issue.id).label("total")
-#         )
-#         .group_by(Issue.assignee_id)
-#         .all()
-#     )
-
-# @router.get("/latency")
-# def avg_latency(db: Session = Depends(SessionLocal)):
-#     return db.query(func.avg(Issue.resolved_at - Issue.created_at)).scalar()
-
 from fastapi import APIRouter, Depends
 from sqlalchemy.orm import Session
 from sqlalchemy import func
